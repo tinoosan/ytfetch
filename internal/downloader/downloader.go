@@ -41,11 +41,14 @@ func (d *Downloader) Download() {
 		log.Fatal("Error excecuting video download")
 		return
 	}
-  cmd.Start()
+  if err := cmd.Start(); err != nil {
+    log.Fatal(err)
+  }
   if _, err := io.Copy(os.Stdout, output); err != nil {
     log.Fatal(err)
   }
-  cmd.Wait()
-
-
+  
+  if err := cmd.Wait(); err != nil {
+    log.Fatal(err)
+  }
 }
